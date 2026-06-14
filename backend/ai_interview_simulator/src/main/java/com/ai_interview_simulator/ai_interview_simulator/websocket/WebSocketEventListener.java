@@ -1,0 +1,58 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
+package com.ai_interview_simulator.ai_interview_simulator.websocket;
+
+import com.ai_interview_simulator.ai_interview_simulator.service.WebSocketSessionService;
+import java.security.Principal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.event.EventListener;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
+import org.springframework.stereotype.Component;
+import org.springframework.web.socket.messaging.SessionConnectedEvent;
+import org.springframework.web.socket.messaging.SessionDisconnectEvent;
+import org.springframework.web.socket.messaging.SessionSubscribeEvent;
+
+@Component
+public class WebSocketEventListener {
+    private static final Logger log = LoggerFactory.getLogger(WebSocketEventListener.class);
+    private final WebSocketSessionService sessionService;
+
+    public WebSocketEventListener(WebSocketSessionService sessionService) {
+        this.sessionService = sessionService;
+    }
+
+    @EventListener
+    public void handleWebSocketConnectListener(SessionConnectedEvent event) {
+        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
+        String sessionId = accessor.getSessionId();
+        Principal user = accessor.getUser();
+        String username = user != null ? user.getName() : "anonymous";
+        log.info("WebSocket CONNECTED — session={} user={}", sessionId, username);
+        if (user != null) {
+            this.sessionService.addSession(sessionId, user.getName());
+        }
+
+    }
+
+    @EventListener
+    public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
+        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
+        String sessionId = accessor.getSessionId();
+        String username = this.sessionService.getUserBySession(sessionId);
+        log.info("WebSocket DISCONNECTED — session={} user={}", sessionId, username);
+        this.sessionService.removeSession(sessionId);
+    }
+
+    @EventListener
+    public void handleWebSocketSubscribeListener(SessionSubscribeEvent event) {
+        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
+        String destination = accessor.getDestination();
+        Principal user = accessor.getUser();
+        String username = user != null ? user.getName() : "anonymous";
+        log.info("WebSocket SUBSCRIBED — destination={} user={}", destination, username);
+    }
+}
