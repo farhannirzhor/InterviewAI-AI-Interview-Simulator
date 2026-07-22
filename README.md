@@ -100,6 +100,13 @@ Gemma 3
 ---
 
 ## Screenshots
+<img width="1906" height="1012" alt="Chat room" src="https://github.com/user-attachments/assets/e5f373d2-fb57-4fbf-8253-5ee486e7b4eb" />
+<img width="1912" height="1011" alt="Dashboard page" src="https://github.com/user-attachments/assets/aeda3396-6a03-441b-a3b0-d000ee9849c1" />
+<img width="1907" height="1006" alt="Demo upgrade plan" src="https://github.com/user-attachments/assets/a8aea95d-9677-45bf-9981-f66f3fe261fe" />
+<img width="1908" height="1013" alt="Evaluation Page" src="https://github.com/user-attachments/assets/224a45ff-0ad9-47a0-8b76-c5c7d82294f4" />
+<img width="1916" height="1017" alt="Login Page" src="https://github.com/user-attachments/assets/ba7dbe5a-310e-4891-9089-7dd3da4ad401" />
+<img width="1915" height="1016" alt="Registration Page" src="https://github.com/user-attachments/assets/bc64e1d9-fee7-4e65-bae6-42d1c5727f64" />
+
 
 ### Login Page
 Secure authentication system with JWT-based authorization.
